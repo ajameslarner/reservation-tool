@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        var hotelRoomDetail = new HotelRoomDetails();
-
-        hotelRoomDetail.addRoomDetails("Standard", "Comfortable and budget-friendly accommodation", "1-250", "Twin or Double");
-        hotelRoomDetail.addRoomDetails("Deluxe", "Enhanced comfort and additional space", "251-500", "Queen-size bed");
-        hotelRoomDetail.addRoomDetails("Superior", "Luxury and premium services", "501-530", "Queen or king-size bed");
-
         var roomRates = new RoomRates();
 
         roomRates.addRoomRate("Standard", 1000);
         roomRates.addRoomRate("Deluxe", 1200);
         roomRates.addRoomRate("Superior", 1800);
+
+        var hotelRoomDetail = new HotelRoomDetails(roomRates);
+
+        hotelRoomDetail.addRoomDetails("Standard", "Comfortable and budget-friendly accommodation", "1-250", "Twin or Double");
+        hotelRoomDetail.addRoomDetails("Deluxe", "Enhanced comfort and additional space", "251-500", "Queen-size bed");
+        hotelRoomDetail.addRoomDetails("Superior", "Luxury and premium services", "501-530", "Queen or king-size bed");
 
         var guestDetails = new GuestDetails();
 
@@ -24,6 +24,17 @@ public class Main {
         guestDetails.addGuestDetails( "Akram", "Khan", 20, 30, "Standard", "Double");
         guestDetails.addGuestDetails( "Jordan", "Robinson", 14, 45, "Standard", "Double");
         guestDetails.addGuestDetails( "Daniel", "Scott", 10, 22, "Standard", "Twin");
+
+        var hotelReservation = new Reservation(hotelRoomDetail, guestDetails);
+        var reportGenerator = new ReportGenerator(hotelRoomDetail, hotelReservation);
+
+        while (true) {
+//            hotelReservation.reserveRoom();
+            hotelReservation.reserveGroupOfRooms();
+            reportGenerator.generateIncomeReport();
+            hotelReservation.searchGuestsByName();
+            hotelReservation.cancelReservation();
+        }
 
 //        var roomTiers = new String[][] {
 //                { "Standard", "Comfortable and budget-friendly accommodation", "1-250", "Twin or Double", "1000" },
